@@ -9,6 +9,7 @@ findAllItems = () => {
         }).catch(error => console.log("Erreur : " + error)); // Verification a supprimer en phase de production;
 }
 
+// PAGE INDEX
 async function items() {
     const items = await findAllItems();
 
@@ -74,6 +75,18 @@ async function items() {
         itemLink.textContent = "more info";
 
     });
+}
+
+// Page produit
+
+let idItems = "";
+async function infoItems() {
+    idItems = location.search.substring(4);
+    const infoItems = await findAllItems();
+
+    let infoItem = document.querySelector(".product");
+
+    
 }
 
 console.log(items()); // Verification que le tableau d'objet issu de l'API est bien return
