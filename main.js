@@ -86,6 +86,7 @@ async function infoItems() {
 
     // Création des éléments html
     let infoItem = document.querySelector(".product");
+    
     let itemImg = document.createElement("div");
     let itemDescBox = document.createElement("div");
     let itemDesc = document.createElement("p");
@@ -119,7 +120,7 @@ async function infoItems() {
     itemPrice.setAttribute("class", "mb-0 font-weight-bold")
 
     //Structure des blocs Html
-    itemPosition.appendChild(itemCard);
+    .appendChild(itemCard);
     itemCard.appendChild(itemImg);
     itemImg.appendChild(itemPhoto);
     itemCard.appendChild(itemDescBox);
