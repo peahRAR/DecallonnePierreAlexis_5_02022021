@@ -86,7 +86,7 @@ async function infoItems() {
 
     // Création des éléments html
     let infoItem = document.querySelector(".product");
-    
+
     let itemImg = document.createElement("div");
     let itemDescBox = document.createElement("div");
     let itemDesc = document.createElement("p");
@@ -120,7 +120,7 @@ async function infoItems() {
     itemPrice.setAttribute("class", "mb-0 font-weight-bold")
 
     //Structure des blocs Html
-    .appendChild(itemCard);
+    infoItem.appendChild(itemCard);
     itemCard.appendChild(itemImg);
     itemImg.appendChild(itemPhoto);
     itemCard.appendChild(itemDescBox);
@@ -134,4 +134,5 @@ async function infoItems() {
     itemName.textContent = infoItems.name
 }
 
-console.log(items()); // Verification que le tableau d'objet issu de l'API est bien return
+
+
