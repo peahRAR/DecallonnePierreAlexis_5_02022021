@@ -81,7 +81,7 @@ async function items() {
 
 let idItems = "";
 async function infoItems() {
-    idItems = location.search.substring(4);
+    idItems = location.search.substring(4); // Recuperation de l'id
     const infoItems = await findAllItems();
 
     // Création des éléments html
@@ -120,7 +120,8 @@ async function infoItems() {
 
     // Affichage dans le Html
     itemName.textContent = infoItems.name;
-    console.log(infoItems)
+    console.log(infoItems);
+    console.log(idItems);
 
 
 
