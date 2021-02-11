@@ -81,8 +81,8 @@ async function items() {
 
 let idItems = "";
 async function infoItems() {
-    idItems = location.search.substring(4); // Recuperation de l'id
-    const infoItems = await findAllItems();
+    idItems = location.search.substring(4); // Recuperation de l'id dans l'URL
+    const infoItemSelect = fetch(`http://localhost:3000/api/cameras/${idItems}`);
 
     // Création des éléments html
     let infoItem = document.querySelector(".product");
@@ -119,9 +119,10 @@ async function infoItems() {
     itemCard.appendChild(itemAddToCart);
 
     // Affichage dans le Html
-    itemName.textContent = infoItems.name;
-    console.log(infoItems);
+    itemName.textContent = infoItemSelect.name;
     console.log(idItems);
+    console.log(infoItemSelect);
+    console.log(infoItemSelect.name);
 
 
 
