@@ -79,10 +79,20 @@ async function items() {
 
 //PAGE PRODUIT
 
+// Retrouver uniquement l'article concerné dans l'API
 let idItems = "";
-async function infoItems() {
+findGoodItem = () => {
     idItems = location.search.substring(4); // Recuperation de l'id dans l'URL
-    const infoItemSelect = fetch(`http://localhost:3000/api/cameras/${idItems}`);
+    return fetch(`http://localhost:3000/api/cameras/${idItems}`)
+        .then(response => {
+            const jsonResponse = response.json()
+            console.log(jsonResponse) // Verification a supprimer en phase de production
+            return jsonResponse
+        }).catch(error => console.log("Erreur : " + error)); // Verification a supprimer en phase de production;
+}
+
+async function infoItem() {
+    const item = await findGoodItem();
 
     // Création des éléments html
     let infoItem = document.querySelector(".product");
@@ -119,12 +129,10 @@ async function infoItems() {
     itemCard.appendChild(itemAddToCart);
 
     // Affichage dans le Html
-    itemName.textContent = infoItemSelect.name;
+    itemName.textContent = item.name;
     console.log(idItems);
     console.log(infoItemSelect);
     console.log(infoItemSelect.name);
-
-
 
 }
 
