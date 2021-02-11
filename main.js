@@ -86,52 +86,44 @@ async function infoItems() {
 
     // Création des éléments html
     let infoItem = document.querySelector(".product");
-
+    let itemCard = document.createElement("div")
     let itemImg = document.createElement("div");
     let itemDescBox = document.createElement("div");
     let itemDesc = document.createElement("p");
     let itemPhoto = document.createElement("img");
-    let itemName = document.createElement("h5");
+    let itemName = document.createElement("h1");
+    let itemOption = document.createElement("select");
     let itemPriceBox = document.createElement("div")
     let itemPrice = document.createElement("p");
-    let itemLink = document.createElement("a");
+    let itemAddToCart = document.createElement("a");
 
-    // Ajout des attributs
-    infoItem.setAttribute("class", "card");
-    // Div des cards (composant Bootstrap)
-    itemCard.setAttribute("class", "card  mb-2");
-    // Div Encart image
-    itemImg.setAttribute("class", "boxImg embed-responsive embed-responsive-16by9 ");
-    itemImg.setAttribute("height", "200px");
-    // Balise image
-    itemPhoto.setAttribute("src", item.imageUrl);
-    itemPhoto.setAttribute("alt", "Photo d'une caméra");
-    itemPhoto.setAttribute("class", "card-img-top embed-responsive-item");
-    // Div Body Card
-    itemDescBox.setAttribute("class", "card-body");
-    // Balise Description
+    // Attributs des balises Html
+    // Div englobante
+    infoItem.setAttribute("class", "product col-12");
+    itemCard.setAttribute("class", "card d-flex");
+    itemImg.setAttribute("class", "imgBox");
+    itemDescBox.setAttribute("class", "bloc-description");
     itemDesc.setAttribute("class", "description");
-    // Balise Link + Prix
-    itemPriceBox.setAttribute("class", "d-flex justify-content-between align-items-center")
-    // Balise Link
-    itemLink.setAttribute("class", "btn badge badge-dark text-uppercase p-2")
-    itemLink.setAttribute("href", "html/product.html?id=" + item._id); // Gére la redireciton en passant l'id produit dans l'url
-    // Balise Prix
-    itemPrice.setAttribute("class", "mb-0 font-weight-bold")
+    itemName.setAttribute("class", "card-header");
 
     //Structure des blocs Html
     infoItem.appendChild(itemCard);
+    itemCard.appendChild(itemName);
     itemCard.appendChild(itemImg);
     itemImg.appendChild(itemPhoto);
     itemCard.appendChild(itemDescBox);
-    itemDescBox.appendChild(itemName);
     itemDescBox.appendChild(itemDesc);
-    itemDescBox.appendChild(itemPriceBox);
-    itemPriceBox.appendChild(itemLink);
+    itemDescBox.appendChild(itemOption);
+    itemCard.appendChild(itemPriceBox);
     itemPriceBox.appendChild(itemPrice);
+    itemCard.appendChild(itemAddToCart);
 
-    // Remplissage des balise
-    itemName.textContent = infoItems.name
+    // Affichage dans le Html
+    itemName.textContent = infoItems.name;
+    console.log(infoItems)
+
+
+
 }
 
 
