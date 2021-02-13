@@ -18,7 +18,7 @@ async function items() {
 
     // Boucle sur les objets récupéré via l'API
     items.forEach((item) => {
-        let itemPosition = document.createElement("div");
+        let itemPosition = document.createElement("div"); // Voir pour externalisé en fin de projet
         let itemCard = document.createElement("article");
         let itemImg = document.createElement("div");
         let itemDescBox = document.createElement("div");
@@ -95,7 +95,7 @@ async function infoItem() {
     const item = await findGoodItem();
 
     // Création des éléments html
-    let infoItem = document.querySelector(".product");
+    let infoItem = document.querySelector(".product"); // Voir pour externalisé en fin de projet
     let itemCard = document.createElement("div")
     let itemImg = document.createElement("div");
     let itemDescBox = document.createElement("div");
@@ -106,33 +106,62 @@ async function infoItem() {
     let itemPriceBox = document.createElement("div")
     let itemPrice = document.createElement("p");
     let itemAddToCart = document.createElement("a");
+    let cartIcon = document.createElement("span");
+    let addToCartBox = document.createElement("div");
+    let footerCard = document.createElement("div");
 
     // Attributs des balises Html
     // Div englobante
-    infoItem.setAttribute("class", "product col-12");
+    infoItem.setAttribute("class", "product col-12 p-0");
     itemCard.setAttribute("class", "card d-flex");
     itemImg.setAttribute("class", "imgBox");
-    itemDescBox.setAttribute("class", "bloc-description");
+    itemDescBox.setAttribute("class", "bloc-description card-body");
     itemDesc.setAttribute("class", "description");
-    itemName.setAttribute("class", "card-header");
+    itemName.setAttribute("class", "card-title");
+    itemAddToCart.setAttribute("class","text-uppercase text-white");
+    cartIcon.setAttribute("class", "fas fa-shopping-cart mr-1 text-white");
+    addToCartBox.setAttribute("class", "btn badge badge-success p-2 order-3");
+    itemPriceBox.setAttribute("class", "price-box d-flex align-items-center");
+    footerCard.setAttribute("class", "d-flex flex-column justify-content-between align-items-center flex-md-row ");
+    itemPrice.setAttribute("class", "m-0 mr-4 font-weight-bold")
+    itemOption.setAttribute("class", "optionSelector mb-3 mb-md-0");
+
+
+    // Gestion affichage photo
+    itemPhoto.setAttribute("src", item.imageUrl);
+    itemPhoto.setAttribute("alt", "Photo d'une caméra");
+    itemPhoto.setAttribute("class", "card-img-top embed-responsive-item");
 
     //Structure des blocs Html
     infoItem.appendChild(itemCard);
-    itemCard.appendChild(itemName);
     itemCard.appendChild(itemImg);
     itemImg.appendChild(itemPhoto);
     itemCard.appendChild(itemDescBox);
+    itemDescBox.appendChild(itemName);
     itemDescBox.appendChild(itemDesc);
-    itemDescBox.appendChild(itemOption);
-    itemCard.appendChild(itemPriceBox);
+    itemDescBox.appendChild(footerCard);
+    footerCard.appendChild(itemOption);
+    footerCard.appendChild(addToCartBox);
+    footerCard.appendChild(itemPriceBox);
     itemPriceBox.appendChild(itemPrice);
+    itemPriceBox.appendChild(addToCartBox);
     itemCard.appendChild(itemAddToCart);
+    addToCartBox.appendChild(cartIcon);
+    addToCartBox.appendChild(itemAddToCart);
 
     // Affichage dans le Html
     itemName.textContent = item.name;
-    console.log(idItems);
-    console.log(infoItemSelect);
-    console.log(infoItemSelect.name);
+    itemDesc.textContent = item.description;
+    itemPrice.textContent = item.price / 100 + " EUR";
+    itemAddToCart.textContent = "Buy";
+
+    // Création de la boucle pour récupérer les différentes option.
+    item.lenses.forEach((cam) =>{
+        let option = document.createElement("option");
+        document.querySelector(".optionSelector");
+        itemOption.appendChild(option).innerHTML = cam;
+
+    });
 
 }
 
