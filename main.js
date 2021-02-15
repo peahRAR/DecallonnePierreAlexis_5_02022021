@@ -115,21 +115,21 @@ async function infoItem() {
     let textSelectBox = document.createElement("p");
 
     // Attributs des balises Html
-    // Div englobante
     infoItem.setAttribute("class", "product col-12 p-0");
     itemCard.setAttribute("class", "card d-flex");
     itemImg.setAttribute("class", "imgBox");
     itemDescBox.setAttribute("class", "bloc-description card-body");
     itemDesc.setAttribute("class", "description");
     itemName.setAttribute("class", "card-title");
-    itemAddToCart.setAttribute("class","text-uppercase text-white");
+    itemAddToCart.setAttribute("class", "text-uppercase text-white");
     cartIcon.setAttribute("class", "fas fa-shopping-cart mr-1 text-white");
     addToCartBox.setAttribute("class", "btn badge badge-success p-2 order-3 addToCart");
+    addToCartBox.setAttribute("onClick", "addItemOnCart()");
     itemPriceBox.setAttribute("class", "price-box d-flex align-items-center");
     footerCard.setAttribute("class", "d-flex flex-column justify-content-between align-items-center flex-md-row ");
     itemPrice.setAttribute("class", "m-0 mr-4 font-weight-bold")
     itemOption.setAttribute("class", "optionSelector mb-3 mb-md-0");
-    selectBox.setAttribute("class" , "lensesChoice d-flex");
+    selectBox.setAttribute("class", "lensesChoice d-flex");
     textSelectBox.setAttribute("class", "optionChoiceTitle m-0 mr-2");
 
     // Gestion affichage photo
@@ -165,16 +165,19 @@ async function infoItem() {
     placeName.textContent = item.name;
 
     // Création de la boucle pour récupérer les différentes option.
-    item.lenses.forEach((cam) =>{
+    item.lenses.forEach((cam) => {
         let option = document.createElement("option");
         document.querySelector(".optionSelector");
         itemOption.appendChild(option).innerHTML = cam;
-    });    
+    });
+
+    return item;
 }
 
+
 // Gestion du panier
-let cart = localStorage.getItem("cart")?JSON.parse(localStorage.getItem("cart")):[];
-console.log(cart);
+let cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+
 // Afichage du nombre de produit dans le panier
 
 function numberProductsOnCart() {
@@ -184,15 +187,12 @@ function numberProductsOnCart() {
 
 
 // Ajout d'un produit au panier
-addItemOnCart = () => {
+addItemOnCart = (item) => {
     let buy = document.querySelector(".addToCart");
-    buy.addEventListener("onClick", async function () {
-        const add = await findAllItems();
-        cart.push(add);
-        localStorage.setItem("cart", JSON.stringify(cart));
-        alert("Article ajouté au panier");
-        location.reload();
-    });
+    alert("click");
+    cart.push(item);
+    alert("Article ajouté au panier");
+    console.log(cart);
 };
 
 
