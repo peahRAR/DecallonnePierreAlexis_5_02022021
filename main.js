@@ -123,8 +123,11 @@ async function infoItem() {
     itemName.setAttribute("class", "card-title");
     itemAddToCart.setAttribute("class", "text-uppercase text-white");
     cartIcon.setAttribute("class", "fas fa-shopping-cart mr-1 text-white");
+
+    //Bouton Ajout au Panier
     addToCartBox.setAttribute("class", "btn badge badge-success p-2 order-3 addToCart");
-    addToCartBox.setAttribute("onClick", "addItemOnCart()");
+    addToCartBox.setAttribute("onClick", "addItemOnCart(item)");
+
     itemPriceBox.setAttribute("class", "price-box d-flex align-items-center");
     footerCard.setAttribute("class", "d-flex flex-column justify-content-between align-items-center flex-md-row ");
     itemPrice.setAttribute("class", "m-0 mr-4 font-weight-bold")
@@ -171,28 +174,20 @@ async function infoItem() {
         itemOption.appendChild(option).innerHTML = cam;
     });
 
-    return item;
+    return
 }
-
 
 // Gestion du panier
-let cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
-
-// Afichage du nombre de produit dans le panier
-
-function numberProductsOnCart() {
-    let productOnCart = document.querySelector(".numberItem");
-    productOnCart.textContent = cart.length;
-}
-
+let cart = [];
+localStorage.setItem('order', JSON.stringify(cart));
 
 // Ajout d'un produit au panier
 addItemOnCart = (item) => {
-    let buy = document.querySelector(".addToCart");
-    alert("click");
-    cart.push(item);
+    let oldCart = JSON.parse(localStorage.getItem('order'));
+    oldCart.push(item);
+    localStorage.setItem('order', JSON.stringify(oldCart));
     alert("Article ajouté au panier");
-    console.log(cart);
+    console.log(oldCart);
 };
 
 
