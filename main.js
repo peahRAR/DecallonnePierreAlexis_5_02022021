@@ -96,6 +96,8 @@ async function infoItem() {
 
     // Création des éléments html
     let infoItem = document.querySelector(".product"); // Voir pour externalisé en fin de projet
+    let placeName = document.querySelector(".nameItem");
+
     let itemCard = document.createElement("div")
     let itemImg = document.createElement("div");
     let itemDescBox = document.createElement("div");
@@ -109,6 +111,8 @@ async function infoItem() {
     let cartIcon = document.createElement("span");
     let addToCartBox = document.createElement("div");
     let footerCard = document.createElement("div");
+    let selectBox = document.createElement("div");
+    let textSelectBox = document.createElement("p");
 
     // Attributs des balises Html
     // Div englobante
@@ -120,12 +124,13 @@ async function infoItem() {
     itemName.setAttribute("class", "card-title");
     itemAddToCart.setAttribute("class","text-uppercase text-white");
     cartIcon.setAttribute("class", "fas fa-shopping-cart mr-1 text-white");
-    addToCartBox.setAttribute("class", "btn badge badge-success p-2 order-3");
+    addToCartBox.setAttribute("class", "btn badge badge-success p-2 order-3 addToCart");
     itemPriceBox.setAttribute("class", "price-box d-flex align-items-center");
     footerCard.setAttribute("class", "d-flex flex-column justify-content-between align-items-center flex-md-row ");
     itemPrice.setAttribute("class", "m-0 mr-4 font-weight-bold")
     itemOption.setAttribute("class", "optionSelector mb-3 mb-md-0");
-
+    selectBox.setAttribute("class" , "lensesChoice d-flex");
+    textSelectBox.setAttribute("class", "optionChoiceTitle m-0 mr-2");
 
     // Gestion affichage photo
     itemPhoto.setAttribute("src", item.imageUrl);
@@ -140,9 +145,11 @@ async function infoItem() {
     itemDescBox.appendChild(itemName);
     itemDescBox.appendChild(itemDesc);
     itemDescBox.appendChild(footerCard);
-    footerCard.appendChild(itemOption);
+    footerCard.appendChild(selectBox);
     footerCard.appendChild(addToCartBox);
     footerCard.appendChild(itemPriceBox);
+    selectBox.appendChild(textSelectBox);
+    selectBox.appendChild(itemOption);
     itemPriceBox.appendChild(itemPrice);
     itemPriceBox.appendChild(addToCartBox);
     itemCard.appendChild(itemAddToCart);
@@ -150,20 +157,42 @@ async function infoItem() {
     addToCartBox.appendChild(itemAddToCart);
 
     // Affichage dans le Html
+    textSelectBox.textContent = "Lenses :";
     itemName.textContent = item.name;
     itemDesc.textContent = item.description;
     itemPrice.textContent = item.price / 100 + " EUR";
     itemAddToCart.textContent = "Buy";
+    placeName.textContent = item.name;
 
     // Création de la boucle pour récupérer les différentes option.
     item.lenses.forEach((cam) =>{
         let option = document.createElement("option");
         document.querySelector(".optionSelector");
         itemOption.appendChild(option).innerHTML = cam;
-
-    });
-
+    });    
 }
 
+// Gestion du panier
+let cart = localStorage.getItem("cart")?JSON.parse(localStorage.getItem("cart")):[];
+console.log(cart);
+// Afichage du nombre de produit dans le panier
+
+function numberProductsOnCart() {
+    let productOnCart = document.querySelector(".numberItem");
+    productOnCart.textContent = cart.length;
+}
+
+
+// Ajout d'un produit au panier
+addItemOnCart = () => {
+    let buy = document.querySelector(".addToCart");
+    buy.addEventListener("onClick", async function () {
+        const add = await findAllItems();
+        cart.push(add);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert("Article ajouté au panier");
+        location.reload();
+    });
+};
 
 
