@@ -97,7 +97,6 @@ async function infoItem() {
     // Création des éléments html
     let infoItem = document.querySelector(".product"); // Voir pour externalisé en fin de projet
     let placeName = document.querySelector(".nameItem");
-
     let itemCard = document.createElement("div")
     let itemImg = document.createElement("div");
     let itemDescBox = document.createElement("div");
@@ -123,10 +122,9 @@ async function infoItem() {
     itemName.setAttribute("class", "card-title");
     itemAddToCart.setAttribute("class", "text-uppercase text-white");
     cartIcon.setAttribute("class", "fas fa-shopping-cart mr-1 text-white");
-
-    //Bouton Ajout au Panier
     addToCartBox.setAttribute("class", "btn badge badge-success p-2 order-3 addToCart");
-    addToCartBox.setAttribute("onClick", "addItemOnCart(item)");
+    addToCartBox.addEventListener('click', () => addItemOnCart(item))
+
 
     itemPriceBox.setAttribute("class", "price-box d-flex align-items-center");
     footerCard.setAttribute("class", "d-flex flex-column justify-content-between align-items-center flex-md-row ");
@@ -174,8 +172,9 @@ async function infoItem() {
         itemOption.appendChild(option).innerHTML = cam;
     });
 
-    return
+    return item;
 }
+
 
 // Gestion du panier
 let cart = [];
@@ -183,6 +182,7 @@ localStorage.setItem('order', JSON.stringify(cart));
 
 // Ajout d'un produit au panier
 addItemOnCart = (item) => {
+    console.log(item);
     let oldCart = JSON.parse(localStorage.getItem('order'));
     oldCart.push(item);
     localStorage.setItem('order', JSON.stringify(oldCart));
