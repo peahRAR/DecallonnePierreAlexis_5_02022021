@@ -124,15 +124,12 @@ async function infoItem() {
     cartIcon.setAttribute("class", "fas fa-shopping-cart mr-1 text-white");
     addToCartBox.setAttribute("class", "btn badge badge-success p-2 order-3 addToCart");
     addToCartBox.addEventListener('click', () => addItemOnCart(item))
-
-
     itemPriceBox.setAttribute("class", "price-box d-flex align-items-center");
     footerCard.setAttribute("class", "d-flex flex-column justify-content-between align-items-center flex-md-row ");
     itemPrice.setAttribute("class", "m-0 mr-4 font-weight-bold")
     itemOption.setAttribute("class", "optionSelector mb-3 mb-md-0");
     selectBox.setAttribute("class", "lensesChoice d-flex");
     textSelectBox.setAttribute("class", "optionChoiceTitle m-0 mr-2");
-
     // Gestion affichage photo
     itemPhoto.setAttribute("src", item.imageUrl);
     itemPhoto.setAttribute("alt", "Photo d'une caméra");
@@ -177,17 +174,15 @@ async function infoItem() {
 
 
 // Gestion du panier
-let cart = [];
+let cart = localStorage.getItem("order")?JSON.parse(localStorage.getItem('order')):[];
 localStorage.setItem('order', JSON.stringify(cart));
 
 // Ajout d'un produit au panier
 addItemOnCart = (item) => {
-    console.log(item);
     let oldCart = JSON.parse(localStorage.getItem('order'));
     oldCart.push(item);
     localStorage.setItem('order', JSON.stringify(oldCart));
     alert("Article ajouté au panier");
-    console.log(oldCart);
 };
 
 
