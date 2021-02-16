@@ -95,7 +95,7 @@ async function infoItem() {
     const item = await findGoodItem();
 
     // Création des éléments html
-    let infoItem = document.querySelector(".product"); // Voir pour externalisé en fin de projet
+    let infoItem = document.querySelector(".product"); 
     let placeName = document.querySelector(".nameItem");
     let itemCard = document.createElement("div")
     let itemImg = document.createElement("div");
