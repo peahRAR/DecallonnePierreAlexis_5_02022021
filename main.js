@@ -123,7 +123,7 @@ async function infoItem() {
     itemAddToCart.setAttribute("class", "text-uppercase text-white");
     cartIcon.setAttribute("class", "fas fa-shopping-cart mr-1 text-white");
     addToCartBox.setAttribute("class", "btn badge badge-success p-2 order-3 addToCart");
-    addToCartBox.addEventListener('click', () => addItemOnCart(item))
+    addToCartBox.addEventListener('click', () => addItemOnCart(item));
     itemPriceBox.setAttribute("class", "price-box d-flex align-items-center");
     footerCard.setAttribute("class", "d-flex flex-column justify-content-between align-items-center flex-md-row ");
     itemPrice.setAttribute("class", "m-0 mr-4 font-weight-bold")
@@ -170,6 +170,7 @@ async function infoItem() {
     });
 
     return item;
+
 }
 
 
@@ -182,7 +183,11 @@ addItemOnCart = (item) => {
     let oldCart = JSON.parse(localStorage.getItem('order'));
     oldCart.push(item);
     localStorage.setItem('order', JSON.stringify(oldCart));
-    alert("Article ajouté au panier");
+    $('#myModal').modal('show')
+    setTimeout(function() {$('#myModal').modal('hide');}, 1500);
 };
+
+let nbItemOnOrder = JSON.parse(localStorage.getItem("order"));
+console.log(nbItemOnOrder);
 
 
