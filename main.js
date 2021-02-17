@@ -95,7 +95,7 @@ async function infoItem() {
     const item = await findGoodItem();
 
     // Création des éléments html
-    let infoItem = document.querySelector(".product"); 
+    let infoItem = document.querySelector(".product");
     let placeName = document.querySelector(".nameItem");
     let itemCard = document.createElement("div")
     let itemImg = document.createElement("div");
@@ -175,7 +175,7 @@ async function infoItem() {
 
 
 // Gestion du panier
-let cart = localStorage.getItem("order")?JSON.parse(localStorage.getItem('order')):[];
+let cart = localStorage.getItem("order") ? JSON.parse(localStorage.getItem('order')) : [];
 localStorage.setItem('order', JSON.stringify(cart));
 
 // Ajout d'un produit au panier
@@ -184,10 +184,20 @@ addItemOnCart = (item) => {
     oldCart.push(item);
     localStorage.setItem('order', JSON.stringify(oldCart));
     $('#myModal').modal('show')
-    setTimeout(function() {$('#myModal').modal('hide');}, 1500);
+    setTimeout(function () { $('#myModal').modal('hide'); }, 1500);
+
+    //Gestion affichage nombre d'item dans le panier
+
 };
 
-let nbItemOnOrder = JSON.parse(localStorage.getItem("order"));
-console.log(nbItemOnOrder);
+function showNbItemOnCart() {
+    let showNbItem = document.querySelector(".numberItem");
+    let nbItemOnOrder = JSON.parse(localStorage.getItem("order"));
+    showNbItem.textContent = `${nbItemOnOrder.length} item(s)`;
+    console.log(nbItemOnOrder.length);
+}
+
+showNbItemOnCart();
+
 
 
