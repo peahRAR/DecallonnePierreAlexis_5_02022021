@@ -18,7 +18,8 @@ async function items() {
 
     // Boucle sur les objets récupéré via l'API
     items.forEach((item) => {
-        let itemPosition = document.createElement("div"); // Voir pour externalisé en fin de projet
+        // Création de balise html
+        let itemPosition = document.createElement("div"); 
         let itemCard = document.createElement("article");
         let itemImg = document.createElement("div");
         let itemDescBox = document.createElement("div");
@@ -94,7 +95,7 @@ findGoodItem = () => {
 async function infoItem() {
     const item = await findGoodItem();
 
-    // Création des éléments html
+    // Création des balises html
     let infoItem = document.querySelector(".product");
     let placeName = document.querySelector(".nameItem");
     let itemCard = document.createElement("div")
@@ -123,7 +124,7 @@ async function infoItem() {
     itemAddToCart.setAttribute("class", "text-uppercase text-white");
     cartIcon.setAttribute("class", "fas fa-shopping-cart mr-1 text-white");
     addToCartBox.setAttribute("class", "btn badge badge-success p-2 order-3 addToCart");
-    addToCartBox.addEventListener('click', () => addItemOnCart(item));
+    addToCartBox.addEventListener('click', () => addItemOnCart(item)); // Ici le onClick qui permet d'ajouter le produit au panier
     itemPriceBox.setAttribute("class", "price-box d-flex align-items-center");
     footerCard.setAttribute("class", "d-flex flex-column justify-content-between align-items-center flex-md-row ");
     itemPrice.setAttribute("class", "m-0 mr-4 font-weight-bold")
@@ -168,11 +169,8 @@ async function infoItem() {
         document.querySelector(".optionSelector");
         itemOption.appendChild(option).innerHTML = cam;
     });
-
     return item;
-
 }
-
 
 // Gestion de l'affichage du panier sur toutes les pages
 let cart = localStorage.getItem("order") ? JSON.parse(localStorage.getItem('order')) : [];
@@ -207,6 +205,32 @@ addItemOnCart = (item) => {
     showNbItemOnCart();
     showTotalPriceOnCart();
 };
+
+// Affichage panier complet
+function showCompleteCart(){
+    let orderList = document.querySelector(".cartList");
+    let allItemOnOrder = JSON.parse(localStorage.getItem("order"));
+    allItemOnOrder.forEach(item => {
+        let itemRow = document.createElement("div");
+        let nameItem = document.createElement("p");
+        let priceItem =  document.createElement("p");
+        let deleteItem = document.createElement("a");
+
+        itemRow.setAttribute("class", "productLine row d-flex justify-content-between");
+        nameItem.setAttribute("class", "nameProduct m-0");
+        priceItem.setAttribute("class", "priceProduct m-0");
+        deleteItem.setAttribute("class", "btn deleteItem");
+
+        orderList.appendChild(itemRow);
+        itemRow.appendChild(nameItem);
+        itemRow.appendChild(priceItem);
+        itemRow.appendChild(deleteItem);
+
+        nameItem.textContent = item.name;
+
+    });
+
+}
 
 // Appel des fonctions afin d'avoir le nombre d'item et le montant afficher sur toutes les pages
 showNbItemOnCart();
