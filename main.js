@@ -174,9 +174,28 @@ async function infoItem() {
 }
 
 
-// Gestion du panier
+// Gestion de l'affichage du panier sur toutes les pages
 let cart = localStorage.getItem("order") ? JSON.parse(localStorage.getItem('order')) : [];
 localStorage.setItem('order', JSON.stringify(cart));
+
+//Gestion affichage nombre d'item dans le panier
+function showNbItemOnCart() {
+    let showNbItem = document.querySelector(".numberItem");
+    let nbItemOnOrder = JSON.parse(localStorage.getItem("order"));
+    showNbItem.textContent = `${nbItemOnOrder.length} item(s)`;
+}
+
+//Gestion affichage montant total du panier
+function showTotalPriceOnCart(){
+    let showTotalPrice = document.querySelector(".totalPrice");
+    let totalPrice = JSON.parse(localStorage.getItem("order"));
+    let price = 0;
+    totalPrice.forEach(item => {
+        price += (item.price)/100;
+
+    });
+    showTotalPrice.textContent = `${price} €`
+}
 
 // Ajout d'un produit au panier
 addItemOnCart = (item) => {
@@ -185,19 +204,12 @@ addItemOnCart = (item) => {
     localStorage.setItem('order', JSON.stringify(oldCart));
     $('#myModal').modal('show')
     setTimeout(function () { $('#myModal').modal('hide'); }, 1500);
-
-    //Gestion affichage nombre d'item dans le panier
-
+    showNbItemOnCart();
+    showTotalPriceOnCart();
 };
 
-function showNbItemOnCart() {
-    let showNbItem = document.querySelector(".numberItem");
-    let nbItemOnOrder = JSON.parse(localStorage.getItem("order"));
-    showNbItem.textContent = `${nbItemOnOrder.length} item(s)`;
-    console.log(nbItemOnOrder.length);
-}
-
+// Appel des fonctions afin d'avoir le nombre d'item et le montant afficher sur toutes les pages
 showNbItemOnCart();
-
+showTotalPriceOnCart();
 
 
