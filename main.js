@@ -193,7 +193,11 @@ function showTotalPriceOnCart(){
 
     });
     showTotalPrice.textContent = `${price} €`
+    return price;
 }
+
+let totalPriceOrder = showTotalPriceOnCart(); // Récupération du prix total dans une variable globale
+console.log(totalPriceOrder);
 
 // Ajout d'un produit au panier
 addItemOnCart = (item) => {
@@ -207,28 +211,58 @@ addItemOnCart = (item) => {
 };
 
 // Affichage panier complet
-function showCompleteCart(){
+function showCompleteCart(totalPriceOrder){
+    console.log(totalPriceOrder);
     let orderList = document.querySelector(".cartList");
     let allItemOnOrder = JSON.parse(localStorage.getItem("order"));
     allItemOnOrder.forEach(item => {
         let itemRow = document.createElement("div");
         let nameItem = document.createElement("p");
         let priceItem =  document.createElement("p");
-        let deleteItem = document.createElement("a");
+        let deleteItem = document.createElement("div");
+        let iconDelete = document.createElement("i");
+        let txtDelete = document.createElement("p");
 
-        itemRow.setAttribute("class", "productLine row d-flex justify-content-between");
-        nameItem.setAttribute("class", "nameProduct m-0");
+        itemRow.setAttribute("class", "productLine row d-flex justify-content-between align-items-center pt-2 pb-2 border");
+        nameItem.setAttribute("class", "nameProduct m-0 col-2 mr-2 pl-2");
         priceItem.setAttribute("class", "priceProduct m-0");
-        deleteItem.setAttribute("class", "btn deleteItem");
+        deleteItem.setAttribute("class", "btn btn-outline-dark deleteItem d-flex align-items-center mr-2");
+        iconDelete.setAttribute("class", "fas fa-times mr-2");
+        txtDelete.setAttribute("class", "m-0 text-uppercase");
 
         orderList.appendChild(itemRow);
         itemRow.appendChild(nameItem);
         itemRow.appendChild(priceItem);
         itemRow.appendChild(deleteItem);
+        deleteItem.appendChild(iconDelete);
+        deleteItem.appendChild(txtDelete);
 
         nameItem.textContent = item.name;
-
+        priceItem.textContent = `${(item.price)/100} €`;
+        txtDelete.textContent = "Delete";
     });
+
+    let orderFooter = document.createElement("div");
+    let txtTotal = document.createElement("p");
+    let totalPrice = document.createElement("p");
+    let deleteAll = document.createElement("div");
+    let iconDeleteAll = document.createElement("i");
+    let txtDeleteAll = document.createElement("p");
+
+    orderFooter.setAttribute("class" , "d-flex row text-light bg-dark rounded-bottom p-2");
+    txtTotal.setAttribute("class" , "m-0 text-uppercase font-weight-bold col-2" );
+    totalPrice.setAttribute("class", "m-0 text-light");
+
+
+
+    orderList.appendChild(orderFooter);
+    orderFooter.appendChild(txtTotal);
+    orderFooter.appendChild(totalPrice);
+
+    txtTotal.textContent = "Total :";
+    totalPrice.textContent = `${totalPriceOrder} €`
+
+
 
 }
 
