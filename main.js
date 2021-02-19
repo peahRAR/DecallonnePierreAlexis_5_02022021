@@ -197,7 +197,6 @@ function showTotalPriceOnCart(){
 }
 
 let totalPriceOrder = showTotalPriceOnCart(); // Récupération du prix total dans une variable globale
-console.log(totalPriceOrder);
 
 // Ajout d'un produit au panier
 addItemOnCart = (item) => {
@@ -211,8 +210,7 @@ addItemOnCart = (item) => {
 };
 
 // Affichage panier complet
-function showCompleteCart(totalPriceOrder){
-    console.log(totalPriceOrder);
+function showCompleteCart(){
     let orderList = document.querySelector(".cartList");
     let allItemOnOrder = JSON.parse(localStorage.getItem("order"));
     allItemOnOrder.forEach(item => {
@@ -245,26 +243,45 @@ function showCompleteCart(totalPriceOrder){
     let orderFooter = document.createElement("div");
     let txtTotal = document.createElement("p");
     let totalPrice = document.createElement("p");
-    let deleteAll = document.createElement("div");
+    let boxPassOrder = document.createElement("div");
+    let deleteAll = document.createElement("button");
     let iconDeleteAll = document.createElement("i");
     let txtDeleteAll = document.createElement("p");
+    let passOrder = document.createElement("a");
+    let iconPassOrder = document.createElement("i");
+    let txtPassOrder = document.createElement("p");
 
-    orderFooter.setAttribute("class" , "d-flex row text-light bg-dark rounded-bottom p-2");
-    txtTotal.setAttribute("class" , "m-0 text-uppercase font-weight-bold col-2" );
-    totalPrice.setAttribute("class", "m-0 text-light");
-
-
+    orderFooter.setAttribute("class" , "d-flex row text-light bg-dark rounded-bottom p-2 justify-content-end");
+    txtTotal.setAttribute("class" , "m-0 text-uppercase font-weight-bold col-3 p-0 pr-1 text-center" );
+    totalPrice.setAttribute("class", "m-0 text-light font-weight-bold pr-2");
+    boxPassOrder.setAttribute("class", "boxOrder border mt-4 rounded d-flex p-4 justify-content-around flex-column flex-md-row ");
+    deleteAll.setAttribute("class", "btn btn-danger d-flex align-items-center mb-2");
+    iconDeleteAll.setAttribute("class", " mr-2 fas fa-trash-alt");
+    txtDeleteAll.setAttribute("class", "m-auto ml-2 text-uppercase");
+    passOrder.setAttribute("class", "btn btn-success d-flex align-items-center mb-2");
+    iconPassOrder.setAttribute("class", "far fa-credit-card mr-2");
+    txtPassOrder.setAttribute("class", "m-auto text-uppercase")
 
     orderList.appendChild(orderFooter);
     orderFooter.appendChild(txtTotal);
     orderFooter.appendChild(totalPrice);
 
+    orderList.appendChild(boxPassOrder);
+    boxPassOrder.appendChild(deleteAll);
+    deleteAll.appendChild(iconDeleteAll);
+    deleteAll.appendChild(txtDeleteAll);
+
+    boxPassOrder.appendChild(passOrder);
+    passOrder.appendChild(iconPassOrder);
+    passOrder.appendChild(txtPassOrder);
+
     txtTotal.textContent = "Total :";
-    totalPrice.textContent = `${totalPriceOrder} €`
-
-
-
+    totalPrice.textContent = `${totalPriceOrder} €`;
+    txtDeleteAll.textContent = "Delete order";
+    txtPassOrder.textContent = "Paid";
 }
+
+
 
 // Appel des fonctions afin d'avoir le nombre d'item et le montant afficher sur toutes les pages
 showNbItemOnCart();
