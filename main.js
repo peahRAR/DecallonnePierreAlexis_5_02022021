@@ -19,7 +19,7 @@ async function items() {
     // Boucle sur les objets récupéré via l'API
     items.forEach((item) => {
         // Création de balise html
-        let itemPosition = document.createElement("div"); 
+        let itemPosition = document.createElement("div");
         let itemCard = document.createElement("article");
         let itemImg = document.createElement("div");
         let itemDescBox = document.createElement("div");
@@ -173,8 +173,10 @@ async function infoItem() {
 }
 
 // Gestion de l'affichage du panier sur toutes les pages
-let cart = localStorage.getItem("order") ? JSON.parse(localStorage.getItem('order')) : [];
-localStorage.setItem('order', JSON.stringify(cart));
+function createLocalStock() {
+    let cart = localStorage.getItem("order") ? JSON.parse(localStorage.getItem('order')) : [];
+    localStorage.setItem('order', JSON.stringify(cart));
+}
 
 //Gestion affichage nombre d'item dans le panier
 function showNbItemOnCart() {
@@ -184,12 +186,12 @@ function showNbItemOnCart() {
 }
 
 //Gestion affichage montant total du panier
-function showTotalPriceOnCart(){
+function showTotalPriceOnCart() {
     let showTotalPrice = document.querySelector(".totalPrice");
     let totalPrice = JSON.parse(localStorage.getItem("order"));
     let price = 0;
     totalPrice.forEach(item => {
-        price += (item.price)/100;
+        price += (item.price) / 100;
 
     });
     showTotalPrice.textContent = `${price} €`
@@ -204,41 +206,82 @@ addItemOnCart = (item) => {
     oldCart.push(item);
     localStorage.setItem('order', JSON.stringify(oldCart));
     $('#myModal').modal('show')
-    setTimeout(function () { $('#myModal').modal('hide'); }, 1500);
+    setTimeout(function () { $('#myModal').modal('hide'); }, 1000);
     showNbItemOnCart();
     showTotalPriceOnCart();
 };
 
+// Suppression d'un produit
+deleteOne = (index) => {
+    console.log("entre dans la function");
+    let oldCart = JSON.parse(localStorage.getItem('order'));
+    oldCart.splice(index, 1);
+    localStorage.setItem('order', JSON.stringify(oldCart));
+    showNbItemOnCart();
+    showTotalPriceOnCart();
+    location.reload();
+}
+
+// Supprimer tout le panier
+deleteAllOrder = () => {
+    console.log("on function");
+    localStorage.clear();
+    createLocalStock();
+    showNbItemOnCart();
+    showTotalPriceOnCart();
+    location.reload();
+}
+
 // Affichage panier complet
-function showCompleteCart(){
+function showCompleteCart() {
     let orderList = document.querySelector(".cartList");
     let allItemOnOrder = JSON.parse(localStorage.getItem("order"));
-    allItemOnOrder.forEach(item => {
+
+    // Gestion Si le panier est vide;
+    console.log(allItemOnOrder.length);
+    if (allItemOnOrder.length <= 0) {
         let itemRow = document.createElement("div");
-        let nameItem = document.createElement("p");
-        let priceItem =  document.createElement("p");
-        let deleteItem = document.createElement("div");
-        let iconDelete = document.createElement("i");
-        let txtDelete = document.createElement("p");
+        let noItem = document.createElement("p");
 
         itemRow.setAttribute("class", "productLine row d-flex justify-content-between align-items-center pt-2 pb-2 border");
-        nameItem.setAttribute("class", "nameProduct m-0 col-2 mr-2 pl-2");
-        priceItem.setAttribute("class", "priceProduct m-0");
-        deleteItem.setAttribute("class", "btn btn-outline-dark deleteItem d-flex align-items-center mr-2");
-        iconDelete.setAttribute("class", "fas fa-times mr-2");
-        txtDelete.setAttribute("class", "m-0 text-uppercase");
+        noItem.setAttribute("class", "m-auto")
 
         orderList.appendChild(itemRow);
-        itemRow.appendChild(nameItem);
-        itemRow.appendChild(priceItem);
-        itemRow.appendChild(deleteItem);
-        deleteItem.appendChild(iconDelete);
-        deleteItem.appendChild(txtDelete);
+        itemRow.appendChild(noItem);
 
-        nameItem.textContent = item.name;
-        priceItem.textContent = `${(item.price)/100} €`;
-        txtDelete.textContent = "Delete";
-    });
+        noItem.textContent = "You have no item on your cart"
+
+    } else {
+        allItemOnOrder.forEach(item => {
+            let itemRow = document.createElement("div");
+            let nameItem = document.createElement("p");
+            let priceItem = document.createElement("p");
+            let deleteItem = document.createElement("div");
+            let iconDelete = document.createElement("i");
+            let txtDelete = document.createElement("p");
+            let index = allItemOnOrder.indexOf(item);
+
+
+            itemRow.setAttribute("class", "productLine row d-flex justify-content-between align-items-center pt-2 pb-2 border");
+            nameItem.setAttribute("class", "nameProduct m-0 col-2 mr-2 pl-2");
+            priceItem.setAttribute("class", "priceProduct m-0");
+            deleteItem.setAttribute("class", "btn btn-outline-dark deleteItem d-flex align-items-center mr-2");
+            deleteItem.addEventListener('click', () => deleteOne(index)); // Ici le onClick qui permet de supprimmer un produit du panier
+            iconDelete.setAttribute("class", "fas fa-times mr-2");
+            txtDelete.setAttribute("class", "m-0 text-uppercase");
+
+            orderList.appendChild(itemRow);
+            itemRow.appendChild(nameItem);
+            itemRow.appendChild(priceItem);
+            itemRow.appendChild(deleteItem);
+            deleteItem.appendChild(iconDelete);
+            deleteItem.appendChild(txtDelete);
+
+            nameItem.textContent = item.name;
+            priceItem.textContent = `${(item.price) / 100} €`;
+            txtDelete.textContent = "Delete";
+        });
+    }
 
     let orderFooter = document.createElement("div");
     let txtTotal = document.createElement("p");
@@ -251,11 +294,12 @@ function showCompleteCart(){
     let iconPassOrder = document.createElement("i");
     let txtPassOrder = document.createElement("p");
 
-    orderFooter.setAttribute("class" , "d-flex row text-light bg-dark rounded-bottom p-2 justify-content-end");
-    txtTotal.setAttribute("class" , "m-0 text-uppercase font-weight-bold col-3 p-0 pr-1 text-center" );
+    orderFooter.setAttribute("class", "d-flex row text-light bg-dark rounded-bottom p-2 justify-content-end");
+    txtTotal.setAttribute("class", "m-0 text-uppercase font-weight-bold col-3 p-0 pr-1 text-center");
     totalPrice.setAttribute("class", "m-0 text-light font-weight-bold pr-2");
     boxPassOrder.setAttribute("class", "boxOrder border mt-4 rounded d-flex p-4 justify-content-around flex-column flex-md-row ");
     deleteAll.setAttribute("class", "btn btn-danger d-flex align-items-center mb-2");
+    deleteAll.addEventListener('click', () => deleteAllOrder()); // Ici le onClick qui permet de supprimmer un produit du panier
     iconDeleteAll.setAttribute("class", " mr-2 fas fa-trash-alt");
     txtDeleteAll.setAttribute("class", "m-auto ml-2 text-uppercase");
     passOrder.setAttribute("class", "btn btn-success d-flex align-items-center mb-2");
@@ -279,10 +323,29 @@ function showCompleteCart(){
     totalPrice.textContent = `${totalPriceOrder} €`;
     txtDeleteAll.textContent = "Delete order";
     txtPassOrder.textContent = "Paid";
+
+    // Création du bouton permettant d'accéder au paiement si il y a des articles dans le panier
+    if (allItemOnOrder.length > 0) {
+        passOrder.setAttribute("href", "/html/validation.html");
+
+    }
+}
+
+// Verification des informations avant validation commande
+function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
+function notSpecialCharacter(input){
+    var regex = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$/g;
+    return re.test(input);
 }
 
 
 
+// Création du local Storage
+createLocalStock();
 // Appel des fonctions afin d'avoir le nombre d'item et le montant afficher sur toutes les pages
 showNbItemOnCart();
 showTotalPriceOnCart();
