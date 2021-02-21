@@ -331,17 +331,6 @@ function showCompleteCart() {
     }
 }
 
-// Verification des informations avant validation commande
-function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}
-
-function notSpecialCharacter(input){
-    var regex = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$/g;
-    return re.test(input);
-}
-
 
 
 // Création du local Storage
