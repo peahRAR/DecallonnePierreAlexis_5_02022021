@@ -299,7 +299,7 @@ function showCompleteCart() {
     totalPrice.setAttribute("class", "m-0 text-light font-weight-bold pr-2");
     boxPassOrder.setAttribute("class", "boxOrder border mt-4 rounded d-flex p-4 justify-content-around flex-column flex-md-row ");
     deleteAll.setAttribute("class", "btn btn-danger d-flex align-items-center mb-2");
-    deleteAll.addEventListener('click', () => deleteAllOrder()); // Ici le onClick qui permet de supprimmer un produit du panier
+    deleteAll.addEventListener('click', () => deleteAllOrder()); // Ici le onClick qui permet de supprimmer tout le panier
     iconDeleteAll.setAttribute("class", " mr-2 fas fa-trash-alt");
     txtDeleteAll.setAttribute("class", "m-auto ml-2 text-uppercase");
     passOrder.setAttribute("class", "btn btn-success d-flex align-items-center mb-2");
@@ -327,8 +327,51 @@ function showCompleteCart() {
     // Création du bouton permettant d'accéder au paiement si il y a des articles dans le panier
     if (allItemOnOrder.length > 0) {
         passOrder.setAttribute("href", "/html/validation.html");
-
     }
+}
+
+// Gestion de la validation
+function validationOrder() {
+    // Récupération bouton Submit
+
+    let form = document.querySelector("#form").addEventListener('submit', (event) => {
+        event.preventDefault();
+        // Récupération des inputs saisie dans le form
+        let firstName = document.querySelector("#firstname").value;
+        let lastName = document.querySelector("#name").value;
+        let address = document.querySelector("#address").value;
+        let city = document.querySelector("#city").value;
+        let email = document.querySelector("#email").value;
+
+        // Création de l'objet client
+        contact = {
+            firstName: firstName,
+            lastName: lastName,
+            address: address,
+            city: city,
+            email: email,
+        };
+
+        // Récupération des articles dans le panier
+        let listProducts = JSON.parse(localStorage.getItem("order"));
+        let products = [];
+        listProducts.forEach(item => {
+            products.push(item._id);
+        });
+
+
+        fetch("http://localhost:3000/api/cameras/order", {
+            method: 'POST',
+            body: JSON.stringify({contact , products}),
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success:', result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
 }
 
 

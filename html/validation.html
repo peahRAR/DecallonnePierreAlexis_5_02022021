@@ -58,10 +58,10 @@
     <!-- FORM -->
 
     <div class="container">
-        <form>
+        <form id="form">
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                    <label for="validationServer01">First name</label>
+                    <label for="firstname">First name</label>
                     <input type="text" class="form-control" id="firstname" pattern="([A-zÀ-ž-\s]){2,}" placeholder="Jean"  required>
                     <div class="valid-feedback">
                         Looks good!
@@ -69,8 +69,8 @@
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label for="validationServer02">Last name</label>
-                    <input type="text" class="form-control" id="validationServer02" pattern="([A-zÀ-ž-\s]){2,}" placeholder="Dupont" required>
+                    <label for="name">Last name</label>
+                    <input type="text" class="form-control" id="name" pattern="([A-zÀ-ž-\s]){2,}" placeholder="Dupont" required>
                     <div class="valid-feedback">
                         Looks good!
                       </div>
@@ -79,19 +79,19 @@
 
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                    <label for="validationServer03">Address</label>
-                    <input type="text" class="form-control " id="validationServer03" pattern="([A-z0-9À-ž-\s]){2,}" placeholder="123 rue Faidherbe" required>
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control " id="address" pattern="([A-z0-9À-ž-\s]){2,}" placeholder="123 rue Faidherbe" required>
 
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label for="validationServer04">City</label>
-                    <input type="text" class="form-control" id="validationServer04" pattern="([A-z0-9À-ž-\s]){2,}"  placeholder="Paris" required>
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" id="city" pattern="([A-z0-9À-ž-\s]){2,}"  placeholder="Paris" required>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label for="validationServer05">Email</label>
-                    <input type="email" class="form-control" id="validationServer05" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Invalid email address" placeholder="jeandupont@nomdedomaine.com" required>
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Invalid email address" placeholder="jeandupont@nomdedomaine.com" required>
                 </div>
             </div>
 
@@ -106,12 +106,13 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary" type="submit">Paid</button>
+            <button class="btn btn-success text-uppercase" type="submit">Paid</button>
         </form>
     </div>
 
 
     <script src="../main.js"></script>
+    <script>validationOrder()</script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
