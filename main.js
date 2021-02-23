@@ -366,10 +366,18 @@ function validationOrder() {
         })
             .then(response => response.json())
             .then(result => {
-                console.log('Success:', result);
                 // Création de la modal facture
                 let modal = document.querySelector(".modal-content");
                 let modalBody = document.createElement("div");
+
+                // Remerciement client
+                let boxLogo = document.createElement("div");
+                let logoOrinoco = document.createElement("img")
+                let boxThanks = document.createElement("section");
+                let iconThanks = document.createElement("i");
+                let txtThanks = document.createElement("p");
+
+                // Facture
                 let table = document.createElement("table");
                 let title = document.createElement("h2");
                 let customerInfo = document.createElement("div");
@@ -383,20 +391,29 @@ function validationOrder() {
                 let thItem = document.createElement("th");
                 let thPrice = document.createElement("th");
                 let tbody = document.createElement("tbody");
-                let trbody = document.createElement("tr");
-                let indexValue = document.createElement("th");
-                let itemValue = document.createElement("td");
-                let priceValue = document.createElement("td");
 
+                boxLogo.setAttribute("class", "row d-flex justify-content-center");
+                logoOrinoco.setAttribute("src", "../images/logo_orinoco.svg");
+                logoOrinoco.setAttribute("alt", "logo Orinoco");
+                logoOrinoco.setAttribute("height", "50");
+                logoOrinoco.setAttribute("class", "mx-auto");
                 modalBody.setAttribute("class" , "modal-body");
-                customerInfo.setAttribute("class", "border border-rounded p-2 mt-2 mb-2 col-6");
+                customerInfo.setAttribute("class", "border rounded p-2 mt-2 mb-4 col-6");
                 customerName.setAttribute("class", "m-0");
                 customerAddress.setAttribute("class", "m-0");
                 customerCity.setAttribute("class", "m-0");
                 customerEmail.setAttribute("class", "m-0");
                 table.setAttribute("class", "table table-striped table-hover");
+                boxThanks.setAttribute("class", "mb-4 row d-flex justify-content-center align-items-center");
+                iconThanks.setAttribute("class", "far fa-check-circle mr-1 text-success fs-1");
+                txtThanks.setAttribute("class", "m-0")
 
                 modal.appendChild(modalBody);
+                modalBody.appendChild(boxLogo);
+                boxLogo.appendChild(logoOrinoco);
+                modalBody.appendChild(boxThanks);
+                boxThanks.appendChild(iconThanks);
+                boxThanks.appendChild(txtThanks);
                 modalBody.appendChild(title);
                 modalBody.appendChild(customerInfo);
                 customerInfo.appendChild(customerName);
@@ -410,11 +427,8 @@ function validationOrder() {
                 tr.appendChild(thItem);
                 tr.appendChild(thPrice);
                 table.appendChild(tbody);
-                tbody.appendChild(trbody);
-                trbody.appendChild(indexValue);
-                trbody.appendChild(itemValue);
-                trbody.appendChild(priceValue);
   
+                txtThanks.textContent = `Payment accepted, thank you for your order`;
                 title.textContent = `Invoice : ${result.orderId}`;
                 customerName.textContent = `${result.contact.firstName} ${result.contact.lastName}`;
                 customerAddress.textContent = `${result.contact.address}`;
@@ -426,16 +440,92 @@ function validationOrder() {
 
                 // Boucle ForEach pour afficher chaque ligne du tableau
                 let index = 0;
+                let totalPrice = 0;
                 result.products.forEach(item => {
+                    let trbody = document.createElement("tr");
+                    let indexValue = document.createElement("th");
+                    let itemValue = document.createElement("td");
+                    let priceValue = document.createElement("td");
+                    totalPrice += (item.price)/100;
+
+                    tbody.appendChild(trbody);
+                    trbody.appendChild(indexValue);
+                    trbody.appendChild(itemValue);
+                    trbody.appendChild(priceValue);
+
                     index += 1;
                     indexValue.textContent = index;
                     itemValue.textContent = `${item.name}`;
-                    priceValue.textContent = `${item.price}`;
+                    priceValue.textContent = `${(item.price)/100} €`;
                 });
                 
+                // Affichage de la derniere ligne du tableau avec le Total
+                let trfooter = document.createElement("tr")
+                let emptyBox = document.createElement("th");
+                let totalValue = document.createElement("td");
+
+                emptyBox.setAttribute("colspan", "2");
+                totalValue.setAttribute("class", "border rounded-bottom font-weight-bold");
+
+                tbody.appendChild(trfooter);
+                trfooter.appendChild(emptyBox);
+                trfooter.appendChild(totalValue);
+
+                totalValue.textContent = `${totalPrice} € TTC`;
+
+                // Ajout des boutons de fermeture modal et impréssion
+
+                let rowButton = document.createElement("div");
+                let printButton = document.createElement("button");
+                let printIcon = document.createElement("i");
+                let printTxt = document.createElement("p");
+                let closeButton = document.createElement("button");
+                let closeIcon = document.createElement("i");
+                let closeTxt = document.createElement("p");
+
+                rowButton.setAttribute("class", "d-flex row justify-content-center d-print-none");
+
+                printButton.setAttribute("class", "d-flex btn btn-danger align-items-center mr-2");
+                printIcon.setAttribute("class","fas fa-print mr-2");
+                printTxt.setAttribute("class","m-0");
+
+                closeButton.setAttribute("class", "d-flex btn btn-success align-items-center ");
+                closeIcon.setAttribute("class","fas fa-times mr-2");
+                closeTxt.setAttribute("class","m-0");
                 
+                modalBody.appendChild(rowButton);
+                rowButton.appendChild(printButton);
+                printButton.appendChild(printIcon);
+                printButton.appendChild(printTxt);
+                
+                rowButton.appendChild(closeButton);
+                closeButton.appendChild(closeIcon);
+                closeButton.appendChild(closeTxt);
+
+                printTxt.textContent = "Print Order";
+                closeTxt.textContent = "Close";
+
+                // Gestion bouton d'impression
+
+                printButton.addEventListener('click', () => printModal());
+
+                function printModal() {
+                    window.print();
+                }
+
+                // Gestion du bouton de fermeture de la modal
+
+                closeButton.addEventListener('click', ()=> closeModal());
+
+                function closeModal() {
+                    deleteAllOrder();
+                    $('#modal-invoice').modal('hide');
+                    document.location.href="/";
+                }
+
+
                 // Gestion affichage et fermeture de la modal
-                $('#modal-invoice').modal('show');
+                $('#modal-invoice').modal({backdrop: 'static',keyboard: false},'show');
 
             })
             .catch(error => {
@@ -453,8 +543,9 @@ function validationOrder() {
                 txt.textContent = "An error occurred during payment, please try again.";
 
                 // Gestion affichage et fermeture de la modal
+                
                 $('#modal-invoice').modal('show');
-                setTimeout(function () { $('#modal-invoice').modal('hide'); }, 1000);
+                setTimeout(function () { $('#modal-invoice').modal('hide'); }, 9000);
             });
 
         
