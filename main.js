@@ -359,18 +359,86 @@ function validationOrder() {
             products.push(item._id);
         });
 
-
-        fetch("http://localhost:3000/api/cameras/order", {
+        return fetch("http://localhost:3000/api/cameras/order", {
             method: 'POST',
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({contact , products}),
         })
             .then(response => response.json())
             .then(result => {
                 console.log('Success:', result);
+                // Création de la modal facture
+                let modal = document.querySelector(".modal-content");
+                let modalBody = document.createElement("div");
+                let table = document.createElement("table");
+                let title = document.createElement("h2");
+                let customerInfo = document.createElement("div");
+                let customerName = document.createElement("p");
+                let customerAddress = document.createElement("p");
+                let customerCity = document.createElement("p");
+                let customerEmail = document.createElement("p");
+                let thead = document.createElement("thead");
+                let tr = document.createElement("tr");
+                let thIndex = document.createElement("th");
+                let thItem = document.createElement("th");
+                let thPrice = document.createElement("th");
+
+                modalBody.setAttribute("class" , "modal-body");
+                customerInfo.setAttribute("class", "border border-rounded p-2 m-2 col-6");
+                customerName.setAttribute("class", "m-0");
+                customerAddress.setAttribute("class", "m-0");
+                customerCity.setAttribute("class", "m-0");
+                customerEmail.setAttribute("class", "m-0");
+                table.setAttribute("class", "table table-striped table-hover");
+
+                modal.appendChild(modalBody);
+                modalBody.appendChild(title);
+                modalBody.appendChild(customerInfo);
+                customerInfo.appendChild(customerName);
+                customerInfo.appendChild(customerAddress);
+                customerInfo.appendChild(customerCity);
+                customerInfo.appendChild(customerEmail);
+                modalBody.appendChild(table);
+                table.appendChild(thead);
+                thead.appendChild(tr);
+                tr.appendChild(thIndex);
+                tr.appendChild(thItem);
+                tr.appendChild(thPrice);
+
+                title.textContent = `Invoice : ${result.orderId}`;
+                customerName.textContent = `${result.contact.firstName} ${result.contact.lastName}`;
+                customerAddress.textContent = `${result.contact.address}`;
+                customerCity.textContent = `${result.contact.city}`;
+                customerEmail.textContent = `${result.contact.email}`;
+                thIndex.textContent = "#";
+                thItem.textContent = "Item";
+                thPrice.textContent = "Price";
+
+                // Gestion affichage et fermeture de la modal
+                $('#modal-invoice').modal('show');
+
             })
             .catch(error => {
-                console.error('Error:', error);
+                // Création de la modal échec
+                let modal = document.querySelector(".modal-content");
+                let modalBody = document.createElement("div");
+                let txt = document.createElement("p");
+
+                modalBody.setAttribute("class" , "modal-body");
+                txt.setAttribute("class", "m-0")
+
+                modal.appendChild(modalBody);
+                modalBody.appendChild(txt);
+
+                txt.textContent = "An error occurred during payment, please try again.";
+
+                // Gestion affichage et fermeture de la modal
+                $('#modal-invoice').modal('show');
+                setTimeout(function () { $('#modal-invoice').modal('hide'); }, 1000);
             });
+
+        
+
     });
 }
 
