@@ -382,9 +382,14 @@ function validationOrder() {
                 let thIndex = document.createElement("th");
                 let thItem = document.createElement("th");
                 let thPrice = document.createElement("th");
+                let tbody = document.createElement("tbody");
+                let trbody = document.createElement("tr");
+                let indexValue = document.createElement("th");
+                let itemValue = document.createElement("td");
+                let priceValue = document.createElement("td");
 
                 modalBody.setAttribute("class" , "modal-body");
-                customerInfo.setAttribute("class", "border border-rounded p-2 m-2 col-6");
+                customerInfo.setAttribute("class", "border border-rounded p-2 mt-2 mb-2 col-6");
                 customerName.setAttribute("class", "m-0");
                 customerAddress.setAttribute("class", "m-0");
                 customerCity.setAttribute("class", "m-0");
@@ -404,7 +409,12 @@ function validationOrder() {
                 tr.appendChild(thIndex);
                 tr.appendChild(thItem);
                 tr.appendChild(thPrice);
-
+                table.appendChild(tbody);
+                tbody.appendChild(trbody);
+                trbody.appendChild(indexValue);
+                trbody.appendChild(itemValue);
+                trbody.appendChild(priceValue);
+  
                 title.textContent = `Invoice : ${result.orderId}`;
                 customerName.textContent = `${result.contact.firstName} ${result.contact.lastName}`;
                 customerAddress.textContent = `${result.contact.address}`;
@@ -414,6 +424,16 @@ function validationOrder() {
                 thItem.textContent = "Item";
                 thPrice.textContent = "Price";
 
+                // Boucle ForEach pour afficher chaque ligne du tableau
+                let index = 0;
+                result.products.forEach(item => {
+                    index += 1;
+                    indexValue.textContent = index;
+                    itemValue.textContent = `${item.name}`;
+                    priceValue.textContent = `${item.price}`;
+                });
+                
+                
                 // Gestion affichage et fermeture de la modal
                 $('#modal-invoice').modal('show');
 
