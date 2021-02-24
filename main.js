@@ -6,7 +6,7 @@ findAllItems = () => {
             const jsonResponse = response.json()
             console.log(jsonResponse) // Verification a supprimer en phase de production
             return jsonResponse
-        }).catch(error => console.log("Erreur : " + error)); // Verification a supprimer en phase de production;
+        }).catch(error => alert("Erreur : " + error)); // Verification a supprimer en phase de production;
 }
 
 // PAGE INDEX
@@ -89,7 +89,7 @@ findGoodItem = () => {
             const jsonResponse = response.json()
             console.log(jsonResponse) // Verification a supprimer en phase de production
             return jsonResponse
-        }).catch(error => console.log("Erreur : " + error)); // Verification a supprimer en phase de production;
+        }).catch(error => alert("Erreur : " + error)); // Verification a supprimer en phase de production;
 }
 
 async function infoItem() {
@@ -327,7 +327,9 @@ function showCompleteCart() {
     // Création du bouton permettant d'accéder au paiement si il y a des articles dans le panier
     if (allItemOnOrder.length > 0) {
         passOrder.setAttribute("href", "/html/validation.html");
-    }
+    }else{
+        passOrder.setAttribute("class","btn btn-success d-flex align-items-center mb-2 disabled");
+    };
 }
 
 // Gestion de la validation
@@ -353,7 +355,12 @@ function validationOrder() {
         };
 
         // Récupération des articles dans le panier
-        let listProducts = JSON.parse(localStorage.getItem("order"));
+        
+        let listProducts = {};
+        try {
+            listProducts = JSON.parse(localStorage.getItem("order"));
+          } catch (error) {
+            alert(error)};
         let products = [];
         listProducts.forEach(item => {
             products.push(item._id);

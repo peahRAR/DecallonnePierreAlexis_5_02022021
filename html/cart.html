@@ -15,46 +15,64 @@
 
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <nav class="navbar navbar-light bg-white fixed-top shadow-sm mb-5 bg-white rounded">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="../images/logo_orinoco.svg" alt="logo orinoco" height="45"
-                        class="d-inline-block align-top">
-                </a>
-                <a href="./cart.html" id="goToCart" class="cart btn d-flex align-items-center badge badge-pill badge-dark ">
-                    <i class="fas fa-shopping-cart text-light mr-2"></i>
-                    <div class="infoCart d-flex">
-                        <p class="numberItem p-0 m-0 text-light">0 item</p>
-                        <span class="separator mr-2 ml-2 text-light"> | </span>
-                        <p class="totalPrice p-0 m-0 text-light"></p>
-                    </div>
-                </a>
+    <div class="d-flex flex-column min-vh-100">
+        <!-- HEADER -->
+        <header>
+            <nav class="navbar navbar-light bg-white fixed-top shadow-sm mb-5 bg-white rounded">
+                <div class="container">
+                    <a class="navbar-brand" href="#">
+                        <img src="../images/logo_orinoco.svg" alt="logo orinoco" height="45"
+                            class="d-inline-block align-top">
+                    </a>
+                    <a href="./cart.html" id="goToCart"
+                        class="cart btn d-flex align-items-center badge badge-pill badge-dark ">
+                        <i class="fas fa-shopping-cart text-light mr-2"></i>
+                        <div class="infoCart d-flex">
+                            <p class="numberItem p-0 m-0 text-light">0 item</p>
+                            <span class="separator mr-2 ml-2 text-light"> | </span>
+                            <p class="totalPrice p-0 m-0 text-light"></p>
+                        </div>
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+        <div class="flex-fill">
+            <!-- FIL D ARIANE -->
+            <section class="pt-5 container">
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="pt-5">
+                    <ol class="breadcrumb bg-transparent p-0">
+                        <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                    </ol>
+                </nav>
+            </section>
+
+
+            <!-- VITRINE -->
+            <section class="container">
+                <h2 class="bg-dark text-white pl-2 rounded-top mb-0">Order :</h2>
+                <article class="cartList container">
+
+                </article>
+            </section>
+        </div>
+
+        <footer class="footer bg-light p-3">
+            <div class="container d-flex text-muted justify-content-between align-items-center">
+                <div class="d-flex">
+                    <p class="m-0 mr-1">Orinoco</p>
+                    <span class="flex-column "><small class="align-top">©</small></span>
+                </div>
+                <div class="flex-column text-muted">
+                    <small>
+                        <p class="m-0 text-center">Projet 5 :</p>
+                        <p class="m-0">Decallonne Pierre-Alexis</p>
+                    </small>
+                </div>
             </div>
-        </nav>
-    </header>
-
-
-    <!-- FIL D ARIANE -->
-    <section class="pt-5 container">
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="pt-5">
-            <ol class="breadcrumb bg-transparent p-0">
-                <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Cart</li>
-            </ol>
-        </nav>
-    </section>
-
-
-    <!-- VITRINE -->
-    <section class="container">
-        <h2 class="bg-dark text-white pl-2 rounded-top mb-0">Order :</h2>
-        <article class="cartList container">
-
-        </article>
-    </section>
-
+        </footer>
+    </div>
 
 
 
