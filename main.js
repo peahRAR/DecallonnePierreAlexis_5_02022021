@@ -228,7 +228,7 @@ deleteAllOrder = () => {
     showNbItemOnCart();
     showTotalPriceOnCart();
     location.reload();
-    
+
 }
 
 // Affichage panier complet
@@ -237,7 +237,7 @@ function showCompleteCart() {
     let allItemOnOrder = JSON.parse(localStorage.getItem("order"));
 
     // Gestion Si le panier est vide;
-    console.log(allItemOnOrder.length);
+
     if (allItemOnOrder.length <= 0) {
         let itemRow = document.createElement("div");
         let noItem = document.createElement("p");
