@@ -192,7 +192,6 @@ function showTotalPriceOnCart() {
     let price = 0;
     totalPrice.forEach(item => {
         price += (item.price) / 100;
-
     });
     showTotalPrice.textContent = `${price} €`
     return price;
@@ -554,9 +553,6 @@ function validationOrder() {
                 $('#modal-invoice').modal('show');
                 setTimeout(function () { $('#modal-invoice').modal('hide'); }, 9000);
             });
-
-        
-
     });
 }
 
