@@ -223,7 +223,7 @@ deleteOne = (index) => {
 
 // Supprimer tout le panier
 deleteAllOrder = () => {
-    localStorage.clear();
+    localStorage.removeItem('order')
     createLocalStock();
     showNbItemOnCart();
     showTotalPriceOnCart();
